@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>우리 소그룹 - 멤버 및 기도제목</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4fe830",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#142111",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Noto Sans KR", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+    <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <!-- Top Navigation Bar -->
+            <header
+                class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/20 bg-background-light px-6 py-4 md:px-40">
+                <div class="flex items-center gap-4">
+                    <div class="text-primary">
+                        <span class="material-symbols-outlined text-3xl">church</span>
+                    </div>
+                    <h2 class="text-lg font-bold leading-tight tracking-tight">우리 소그룹</h2>
+                </div>
+                <div class="flex flex-1 justify-end gap-4 md:gap-8 items-center">
+                    <label class="hidden md:flex flex-col min-w-40 h-10 max-w-64">
+                        <div class="flex w-full flex-1 items-stretch rounded-xl h-full bg-primary/10">
+                            <div class="text-primary flex items-center justify-center pl-4">
+                                <span class="material-symbols-outlined">search</span>
+                            </div>
+                            <input
+                                class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:ring-0 px-4 text-base font-normal"
+                                placeholder="멤버 검색" value="" />
+                        </div>
+                    </label>
+                    <a href="add_member.html"
+                        class="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-slate-900 hover:bg-primary/20 transition-colors">
+                        <span class="material-symbols-outlined">add</span>
+                    </a>
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20"
+                        data-alt="User profile avatar circle"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAA_D1lEwf7jbqPBQClx4aJtEBKBTVWPiAy4VvdLdkbYAzqyJ5AKuEvo2MMbb-Spw2fGUDTQIDynA6v-zrHGYJxg_KewaQUsD3fMvCzROLOvG5D_JJS-ea_qXgDSZs-pl9uWdAni2LHBM_415H3LOpSLNHWAQAgn4D0Sk5BVnwzxRfx-RjNDwOtiK04bl83uOACP7umP0V2YOusN1MfsWFt3WYbrlIcoaNPdvs6yFJVLcVtTP_lch6daqlZQNbUU1d3ywil0iIrWbMR");'>
+                    </div>
+                </div>
+            </header>
+            <main class="flex flex-1 flex-col md:flex-row px-4 md:px-40 py-8 gap-8">
+                <!-- Sidebar: Group Info & Quick Menu -->
+                <aside class="w-full md:w-64 flex flex-col gap-6">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm">
+                        <h1 class="text-lg font-bold">은혜 교회</h1>
+                        <p class="text-primary text-sm font-medium">사랑 소그룹</p>
+                        <nav class="mt-6 flex flex-col gap-2">
+                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors"
+                                href="index.html">
+                                <span class="material-symbols-outlined">home</span>
+                                <span class="text-sm font-medium">홈</span>
+                            </a>
+                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary text-slate-900 font-bold"
+                                href="#">
+                                <span class="material-symbols-outlined">group</span>
+                                <span class="text-sm font-medium">멤버 관리</span>
+                            </a>
+                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors"
+                                href="#">
+                                <span class="material-symbols-outlined">list_alt</span>
+                                <span class="text-sm font-medium">기도노트</span>
+                            </a>
+                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors"
+                                href="#">
+                                <span class="material-symbols-outlined">settings</span>
+                                <span class="text-sm font-medium">설정</span>
+                            </a>
+                        </nav>
+                    </div>
+                </aside>
+                <!-- Content Area -->
+                <div class="flex-1 flex flex-col gap-6">
+                    <!-- Tabs -->
+                    <div class="border-b border-primary/20 flex gap-8">
+                        <button class="border-b-4 border-primary pb-3 text-sm font-bold px-2">가족별 멤버</button>
+                        <button
+                            class="border-b-4 border-transparent pb-3 text-sm font-medium text-slate-500 hover:text-slate-700 px-2">기도제목
+                            통합</button>
+                    </div>
+                    <!-- Member Detail Grid (Initially showing Family Lists) -->
+                    <div class="grid grid-cols-1 gap-4">
+                        <!-- Family Item 1 -->
+                        <div
+                            class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden border border-primary/5">
+                            <div class="p-4 bg-primary/5 border-b border-primary/10 flex justify-between items-center">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">family_restroom</span>
+                                    <h3 class="font-bold">김철수 &amp; 이영희 가정</h3>
+                                </div>
+                                <span class="text-xs bg-primary/20 text-slate-700 px-2 py-1 rounded-full">2인 가족</span>
+                            </div>
+                            <div class="p-2 divide-y divide-primary/5">
+                                <!-- Member Profile 1 -->
+                                <details class="group">
+                                    <summary
+                                        class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700 list-none">
+                                        <div class="flex items-center gap-4">
+                                            <div class="size-12 rounded-full bg-slate-200 bg-cover bg-center"
+                                                data-alt="Portrait of a smiling man"
+                                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDjtN5YuFcquOXibd17vFUtraeEgd_CT_PGPm1tlbCzuH2JTb5GgyWWd4nyE-HAdex5GFl3nFjDv6-5Rij_DVKtDaIG9rjehRRsy9_1C6yXpDdd549EmI1C1tN_Z3R2x-ND-CxbPRs96l3I-q3KYoHe6SMV2NFW1VxjZwjZSJjlm53q0NAkCpPUP7RCs9dz0FwIHy63gY41Y6HsFTZNJn6p30sAHaSFVb2_Bp2PdDsAwxm88se1Or6Dt4hB01YsYkQvByr4tfbG3ZeJ")'>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold">김철수</p>
+                                                <p class="text-xs text-slate-500">가장 · 남편</p>
+                                            </div>
+                                        </div>
+                                        <span
+                                            class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                                    </summary>
+                                    <div class="px-6 pb-6 pt-2">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div class="space-y-3">
+                                                <h4
+                                                    class="text-sm font-bold text-primary flex items-center gap-1 border-b border-primary/10 pb-1">
+                                                    <span class="material-symbols-outlined text-base">info</span> 상세 정보
+                                                </h4>
+                                                <div class="text-sm space-y-2">
+                                                    <div class="flex justify-between"><span
+                                                            class="text-slate-500">생년월일</span><span>1978. 05. 14</span>
+                                                    </div>
+                                                    <div class="flex justify-between"><span
+                                                            class="text-slate-500">연락처</span><span>010-1234-5678</span>
+                                                    </div>
+                                                    <div class="flex justify-between"><span
+                                                            class="text-slate-500">직분</span><span>집사</span></div>
+                                                </div>
+                                                <button
+                                                    class="mt-4 w-full py-2 bg-slate-100 hover:bg-slate-200 text-xs font-bold rounded-lg transition-colors">정보
+                                                    수정</button>
+                                            </div>
+                                            <div class="space-y-3">
+                                                <div
+                                                    class="flex justify-between items-center border-b border-primary/10 pb-1">
+                                                    <h4 class="text-sm font-bold text-primary flex items-center gap-1">
+                                                        <span
+                                                            class="material-symbols-outlined text-base">favorite</span>
+                                                        기도제목
+                                                    </h4>
+                                                    <button class="text-xs text-primary font-bold">+ 추가</button>
+                                                </div>
+                                                <ul class="text-sm space-y-3">
+                                                    <li class="p-3 bg-primary/5 rounded-lg relative">
+                                                        <p class="pr-6">직장 내 새로운 프로젝트를 잘 감당하고 지혜를 주시기를 기도합니다.</p>
+                                                        <span class="text-[10px] text-slate-400">2023.10.20</span>
+                                                        <span
+                                                            class="material-symbols-outlined absolute top-2 right-2 text-slate-300 text-sm">edit</span>
+                                                    </li>
+                                                    <li class="p-3 bg-slate-100 rounded-lg relative opacity-70">
+                                                        <div
+                                                            class="flex items-center gap-1 text-primary text-[10px] font-bold mb-1">
+                                                            <span
+                                                                class="material-symbols-outlined text-[12px]">check_circle</span>
+                                                            응답받음
+                                                        </div>
+                                                        <p class="pr-6">가족 여행을 통해 쉼과 회복이 있는 시간 되게 하소서.</p>
+                                                        <span class="text-[10px] text-slate-400">2023.08.15</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </details>
+                                <!-- Member Profile 2 -->
+                                <details class="group">
+                                    <summary
+                                        class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700 list-none">
+                                        <div class="flex items-center gap-4">
+                                            <div class="size-12 rounded-full bg-slate-200 bg-cover bg-center"
+                                                data-alt="Portrait of a smiling woman"
+                                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAj1DEdaj7g1cAA8PTnKPBiI2CdJrpFIxcimq7gW1ZPNHF8sv_nCxmhNoIobm5KtPPrU4rt5W-5hyH3ZVa4CappzopxDQ_Tw15dr5meVOfK9MpNm4dHAEYOT4kj3V4zId3G_jT4b7OIq2dScj6_jL9K8emcVAQoh-3waEed86eFakfJHNzSl1eeupJ6vPTStlngZ8moS6DxqEpl33PKerQMOeLhmOq-R5dfPaiYx9eTyvYOqcbPiILL9r_5-cdJO04NlMAbuwzczYS8")'>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold">이영희</p>
+                                                <p class="text-xs text-slate-500">아내</p>
+                                            </div>
+                                        </div>
+                                        <span
+                                            class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                                    </summary>
+                                    <div class="px-6 pb-6 pt-2">
+                                        <p class="text-sm text-center py-8 text-slate-400">상세 정보를 불러오려면 클릭하세요.</p>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                        <!-- Family Item 2 -->
+                        <div
+                            class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden border border-primary/5 opacity-90">
+                            <div class="p-4 bg-primary/5 border-b border-primary/10 flex justify-between items-center">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">family_restroom</span>
+                                    <h3 class="font-bold">박지민 &amp; 최유진 가정</h3>
+                                </div>
+                                <span class="text-xs bg-primary/20 text-slate-700 px-2 py-1 rounded-full">2인 가족</span>
+                            </div>
+                            <div class="p-2 flex justify-between items-center text-slate-400 px-4 py-3 italic text-sm">
+                                내용을 보려면 가정을 선택하세요
+                                <span class="material-symbols-outlined">chevron_right</span>
+                            </div>
+                        </div>
+                        <!-- Family Item 3 -->
+                        <div
+                            class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden border border-primary/5 opacity-80">
+                            <div class="p-4 bg-primary/5 border-b border-primary/10 flex justify-between items-center">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">family_restroom</span>
+                                    <h3 class="font-bold">정민호 &amp; 강수연 가정</h3>
+                                </div>
+                                <span class="text-xs bg-primary/20 text-slate-700 px-2 py-1 rounded-full">2인 가족</span>
+                            </div>
+                        </div>
+                        <!-- Family Item 4 -->
+                        <div
+                            class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden border border-primary/5 opacity-70">
+                            <div class="p-4 bg-primary/5 border-b border-primary/10 flex justify-between items-center">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">family_restroom</span>
+                                    <h3 class="font-bold">윤석진 &amp; 임지혜 가정</h3>
+                                </div>
+                                <span class="text-xs bg-primary/20 text-slate-700 px-2 py-1 rounded-full">2인 가족</span>
+                            </div>
+                        </div>
+                        <!-- Family Item 5 -->
+                        <div
+                            class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden border border-primary/5 opacity-60">
+                            <div class="p-4 bg-primary/5 border-b border-primary/10 flex justify-between items-center">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">family_restroom</span>
+                                    <h3 class="font-bold">한상우 &amp; 오은주 가정</h3>
+                                </div>
+                                <span class="text-xs bg-primary/20 text-slate-700 px-2 py-1 rounded-full">2인 가족</span>
+                            </div>
+                        </div>
+                        <!-- Family Item 6 -->
+                        <div
+                            class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden border border-primary/5 opacity-50">
+                            <div class="p-4 bg-primary/5 border-b border-primary/10 flex justify-between items-center">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">family_restroom</span>
+                                    <h3 class="font-bold">고태양 &amp; 서하늘 가정</h3>
+                                </div>
+                                <span class="text-xs bg-primary/20 text-slate-700 px-2 py-1 rounded-full">2인 가족</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Footer Summary -->
+                    <div
+                        class="mt-8 p-6 bg-primary/10 rounded-xl border-2 border-dashed border-primary/30 flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-primary p-3 rounded-full text-slate-900">
+                                <span class="material-symbols-outlined">volunteer_activism</span>
+                            </div>
+                            <div>
+                                <p class="font-bold">이번 주 기도제목 요약</p>
+                                <p class="text-sm text-slate-600">총 12명의 멤버 중 8명이 새로운 기도제목을 나누었습니다.</p>
+                            </div>
+                        </div>
+                        <button
+                            class="px-6 py-2 bg-primary text-slate-900 font-bold rounded-lg hover:shadow-lg transition-all">전체
+                            기도제목 PDF로 받기</button>
+                    </div>
+                </div>
+            </main>
+            <!-- Footer -->
+            <footer
+                class="mt-auto px-6 py-8 md:px-40 border-t border-primary/10 bg-white dark:bg-slate-900 text-slate-500 text-sm text-center">
+                <p>© 2023 은혜 교회 사랑 소그룹 매니저. 모든 멤버의 프라이버시를 존중합니다.</p>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>
