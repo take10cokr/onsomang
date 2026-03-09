@@ -50,23 +50,33 @@ if (memberTableBody) {
             const label = roleLabels[member.role] || member.role || '멤버';
             let roleDisplay = `<span class="px-2 py-1 ${styleClass} text-xs font-bold rounded-lg">${label}</span>`;
 
-            let nameDisplay = member.name || "이름없음";
-            if (member.spouse) {
-                nameDisplay += ` & ${member.spouse}`;
-            }
+            let nameRaw = member.name || "이름없음";
+            let spouseInfo = member.spouse ? ` & ${member.spouse}` : '';
+            let childrenInfo = '';
 
-            // Show children count if exists
             if (member.children && Array.isArray(member.children) && member.children.length > 0) {
-                nameDisplay += ` <span class="text-xs text-slate-400 font-normal">(자녀 ${member.children.length})</span>`;
+                const childNames = member.children.map(c => c.name).join(', ');
+                childrenInfo = `
+                    <div class="flex items-center gap-1 text-[11px] text-slate-400 font-normal mt-0.5">
+                        <span class="material-symbols-outlined !text-[14px]">child_care</span>
+                        <span>${childNames}</span>
+                    </div>
+                `;
             }
 
             tr.innerHTML = `
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-500">
-                            ${(member.name || "?").charAt(0)}
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary-dark shrink-0">
+                            ${nameRaw.charAt(0)}
                         </div>
-                        <span class="font-medium">${nameDisplay}</span>
+                        <div class="flex flex-col justify-center">
+                            <div class="flex items-center gap-1">
+                                <span class="font-bold text-slate-900">${nameRaw}</span>
+                                <span class="text-sm text-slate-500">${spouseInfo}</span>
+                            </div>
+                            ${childrenInfo}
+                        </div>
                     </div>
                 </td>
                 <td class="px-6 py-4">${roleDisplay}</td>
