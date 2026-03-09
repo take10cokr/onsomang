@@ -1,5 +1,9 @@
 import { db } from './firebase.js';
 import { collection, query, orderBy, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
+import { setupAuthUI } from './authUI.js';
+
+setupAuthUI('sidebarAuth');
+
 
 const memberTableBody = document.querySelector('tbody');
 
@@ -84,4 +88,60 @@ if (memberTableBody) {
         console.error("Error fetching members: ", error);
         memberTableBody.innerHTML = '<tr><td colspan="5" class="px-6 py-4 text-center text-red-500">멤버 정보를 불러오는데 실패했습니다.</td></tr>';
     });
+}
+
+// --- Recent Prayer Requests ---
+const recentPrayerList = document.getElementById('recentPrayerList');
+
+if (recentPrayerList) {
+    const prayersRef = collection(db, 'prayers');
+    const q = query(prayersRef, orderBy('createdAt', 'desc')); // Limit(3)은 snapshot 내부에서 처리하거나 필요시 추가
+
+    onSnapshot(q, (snapshot) => {
+        recentPrayerList.innerHTML = '';
+        const docs = snapshot.docs.slice(0, 3); // 최신 3개만 표시
+
+        if (docs.length === 0) {
+            recentPrayerList.innerHTML = '<div class="p-8 text-center text-slate-400"><p class="text-sm">등록된 기도 제목이 없습니다.</p></div>';
+            return;
+        }
+
+        docs.forEach(docSnap => {
+            const data = docSnap.data();
+            const firstChar = (data.author || '익')[0];
+            const timeAgo = getTimeAgo(data.createdAt);
+
+            const div = document.createElement('div');
+            div.className = 'bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700';
+            div.innerHTML = `
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold">${firstChar}</div>
+                    <span class="font-bold text-sm">${data.author || '익명'}</span>
+                    <span class="text-xs text-slate-400">${timeAgo}</span>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-2">
+                    ${data.content || ''}
+                </p>
+                <div class="mt-3 flex items-center gap-4 text-xs text-slate-400">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">favorite</span> ${data.prayCount || 0}</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">chat_bubble</span> ${data.commentCount || 0}</span>
+                </div>
+            `;
+            recentPrayerList.appendChild(div);
+        });
+    });
+}
+
+function getTimeAgo(timestamp) {
+    if (!timestamp) return '';
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - date) / 1000);
+
+    if (diffInSeconds < 60) return '방금 전';
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}분 전`;
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}시간 전`;
+    if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}일 전`;
+
+    return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 }

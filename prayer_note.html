@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>기도노트 - 온소망 공동체</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4fe830",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#142111",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Sans KR", "Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', 'Inter', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .card-hover {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .tag-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 9999px;
+        }
+
+        .filter-btn {
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.active {
+            background-color: #4fe830;
+            color: #1a1a1a;
+        }
+
+        .modal-overlay {
+            backdrop-filter: blur(4px);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+    <div class="flex min-h-screen">
+        <!-- Side Navigation -->
+        <aside
+            class="w-64 border-r border-primary/20 bg-white dark:bg-background-dark hidden lg:flex flex-col sticky top-0 h-screen">
+            <div class="p-6 flex flex-col h-full">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="bg-primary/20 p-2 rounded-lg text-primary">
+                        <span class="material-symbols-outlined">church</span>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg leading-tight">우리교회</h1>
+                        <p class="text-xs text-slate-500">사랑방 대시보드</p>
+                    </div>
+                </div>
+                <nav class="flex-1 space-y-1">
+                    <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-primary/10 transition-colors"
+                        href="index.html">
+                        <span class="material-symbols-outlined">home</span>
+                        <span>홈</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-primary/10 transition-colors"
+                        href="detail.html">
+                        <span class="material-symbols-outlined">group</span>
+                        <span>멤버 관리</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-primary/10 transition-colors"
+                        href="#">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        <span>출석</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-slate-900 font-semibold shadow-sm"
+                        href="prayer_note.html">
+                        <span class="material-symbols-outlined">volunteer_activism</span>
+                        <span>기도 제목</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-primary/10 transition-colors"
+                        href="#">
+                        <span class="material-symbols-outlined">description</span>
+                        <span>모임 노트</span>
+                    </a>
+                </nav>
+                <div class="mt-auto pt-6 border-t border-primary/10">
+                    <div id="sidebarAuth"></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 lg:p-8 overflow-y-auto">
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div>
+                    <h2 class="text-3xl font-black tracking-tight">기도노트</h2>
+                    <p class="text-slate-500 mt-1">서로를 위한 기도의 마음을 나누는 따뜻한 공간입니다.</p>
+                </div>
+                <button id="addPrayerBtn"
+                    class="flex items-center gap-2 px-5 py-3 bg-primary text-slate-900 font-bold rounded-xl shadow-sm hover:-translate-y-0.5 transition-all">
+                    <span class="material-symbols-outlined !text-[20px]">add</span>
+                    기도제목 올리기
+                </button>
+            </div>
+
+            <!-- Filter & Search -->
+            <div class="flex flex-col sm:flex-row gap-3 mb-6">
+                <div class="relative flex-1">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                    <input id="searchInput"
+                        class="pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800 border-none rounded-xl focus:ring-2 focus:ring-primary w-full shadow-sm"
+                        placeholder="교인 이름으로 검색하세요..." type="text" />
+                </div>
+                <div class="flex gap-2 flex-wrap">
+                    <button
+                        class="filter-btn active px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-sm font-semibold"
+                        data-filter="all">전체</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-sm font-semibold"
+                        data-filter="week">이번 주</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-sm font-semibold"
+                        data-filter="month">지난 주</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-sm font-semibold"
+                        data-filter="answered">응답됨</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-sm font-semibold"
+                        data-filter="urgent">🔥 긴급</button>
+                    <button class="filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-sm font-semibold"
+                        data-filter="personal">개인</button>
+                </div>
+            </div>
+
+            <!-- Prayer Cards Grid -->
+            <div id="prayerGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                <div class="col-span-full p-12 text-center text-slate-400">
+                    <span class="material-symbols-outlined text-5xl mb-3 block">volunteer_activism</span>
+                    <p>기도제목을 불러오는 중...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Prayer Modal -->
+    <div id="prayerModal"
+        class="fixed inset-0 z-50 hidden modal-overlay bg-black/40 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-lg fade-in">
+            <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <h3 class="text-xl font-bold flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">volunteer_activism</span>
+                    <span id="modalTitle">기도제목 등록</span>
+                </h3>
+                <button id="closeModal"
+                    class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold mb-1.5 text-slate-700 dark:text-slate-300">작성자 이름</label>
+                    <input id="prayerAuthor"
+                        class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-primary"
+                        placeholder="이름 또는 가정명" type="text" />
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-1.5 text-slate-700 dark:text-slate-300">태그</label>
+                    <div class="flex gap-2 flex-wrap">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="prayerTag" value="가정/자녀" class="peer hidden" />
+                            <div
+                                class="px-4 py-2 rounded-full text-sm font-semibold bg-slate-100 dark:bg-slate-800 peer-checked:bg-orange-100 peer-checked:text-orange-700 transition-all">
+                                🏠 가정/자녀</div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="prayerTag" value="건강/치유" class="peer hidden" />
+                            <div
+                                class="px-4 py-2 rounded-full text-sm font-semibold bg-slate-100 dark:bg-slate-800 peer-checked:bg-green-100 peer-checked:text-green-700 transition-all">
+                                💚 건강/치유</div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="prayerTag" value="직장/학업" class="peer hidden" />
+                            <div
+                                class="px-4 py-2 rounded-full text-sm font-semibold bg-slate-100 dark:bg-slate-800 peer-checked:bg-blue-100 peer-checked:text-blue-700 transition-all">
+                                💼 직장/학업</div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="prayerTag" value="🔥 긴급" class="peer hidden" />
+                            <div
+                                class="px-4 py-2 rounded-full text-sm font-semibold bg-slate-100 dark:bg-slate-800 peer-checked:bg-red-100 peer-checked:text-red-700 transition-all">
+                                🔥 긴급</div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="prayerTag" value="개인" class="peer hidden" checked />
+                            <div
+                                class="px-4 py-2 rounded-full text-sm font-semibold bg-slate-100 dark:bg-slate-800 peer-checked:bg-purple-100 peer-checked:text-purple-700 transition-all">
+                                🙏 개인</div>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-1.5 text-slate-700 dark:text-slate-300">기도제목</label>
+                    <textarea id="prayerContent"
+                        class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-primary resize-none"
+                        placeholder="기도제목을 나눠주세요..." rows="5"></textarea>
+                </div>
+            </div>
+            <div class="p-6 pt-0 flex gap-3">
+                <button id="savePrayerBtn" type="button"
+                    class="flex-1 bg-primary text-slate-900 font-bold py-3 rounded-xl hover:opacity-90 transition-opacity">등록하기</button>
+                <button id="cancelModal" type="button"
+                    class="flex-1 bg-slate-100 dark:bg-slate-800 font-bold py-3 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comment Overlay -->
+    <div id="commentOverlay" class="fixed inset-0 z-40 hidden bg-black/30 modal-overlay"></div>
+
+    <!-- Comment Panel (Right Slide) -->
+    <div id="commentPanel"
+        class="fixed right-0 top-0 h-full w-full max-w-md z-50 bg-white dark:bg-slate-900 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out">
+        <!-- Panel Header -->
+        <div class="flex items-center justify-between p-5 border-b border-slate-100 dark:border-slate-800">
+            <div>
+                <h3 class="font-bold text-lg flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">chat_bubble</span>
+                    댓글
+                </h3>
+                <p id="commentPanelTitle" class="text-sm text-slate-500 mt-0.5 truncate max-w-[260px]"></p>
+            </div>
+            <button id="closeCommentPanel"
+                class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <!-- Comment List -->
+        <div id="commentList" class="flex-1 overflow-y-auto px-5 py-3 space-y-1">
+            <div class="text-center text-slate-400 py-10">
+                <span class="material-symbols-outlined text-3xl mb-2 block">chat_bubble_outline</span>
+                <p class="text-sm">아직 댓글이 없어요</p>
+            </div>
+        </div>
+
+        <!-- Comment Input -->
+        <div class="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
+            <div class="mb-2">
+                <input id="commentAuthor"
+                    class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    placeholder="이름 (예: 김철수)" type="text" />
+            </div>
+            <div class="flex gap-2">
+                <textarea id="commentText"
+                    class="flex-1 px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-transparent text-sm resize-none"
+                    placeholder="응원의 말을 남겨주세요 🙏 (Enter로 등록)" rows="2"></textarea>
+                <button id="submitCommentBtn" type="button"
+                    class="px-4 py-2 bg-primary text-slate-900 font-bold rounded-xl hover:opacity-90 transition-opacity self-end flex-shrink-0">
+                    등록
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/prayer_note.js"></script>
+
+</body>
+
+</html>
