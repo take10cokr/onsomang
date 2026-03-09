@@ -26,9 +26,29 @@ if (memberTableBody) {
             tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-700/50';
 
             // Format roles and family display
-            let roleDisplay = member.role === 'leader' ? '<span class="px-2 py-1 bg-primary/10 text-primary-dark text-xs font-bold rounded-lg">리더</span>' :
-                member.role === 'new' ? '<span class="px-2 py-1 bg-orange-100 text-orange-600 text-xs font-bold rounded-lg">새가족</span>' :
-                    '<span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-xs font-bold rounded-lg">멤버</span>';
+            const roleStyles = {
+                '순장': 'bg-blue-100 text-blue-700',
+                '순원': 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400',
+                '방장': 'bg-purple-100 text-purple-700',
+                '권찰': 'bg-emerald-100 text-emerald-700',
+                'leader': 'bg-primary/10 text-primary-dark',
+                'member': 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400',
+                'new': 'bg-orange-100 text-orange-600'
+            };
+
+            const roleLabels = {
+                '순장': '순장',
+                '순원': '순원',
+                '방장': '방장',
+                '권찰': '권찰',
+                'leader': '리더',
+                'member': '멤버',
+                'new': '새가족'
+            };
+
+            const styleClass = roleStyles[member.role] || 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400';
+            const label = roleLabels[member.role] || member.role || '멤버';
+            let roleDisplay = `<span class="px-2 py-1 ${styleClass} text-xs font-bold rounded-lg">${label}</span>`;
 
             let nameDisplay = member.name || "이름없음";
             if (member.spouse) {
