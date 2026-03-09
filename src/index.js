@@ -55,6 +55,11 @@ if (memberTableBody) {
                 nameDisplay += ` & ${member.spouse}`;
             }
 
+            // Show children count if exists
+            if (member.children && Array.isArray(member.children) && member.children.length > 0) {
+                nameDisplay += ` <span class="text-xs text-slate-400 font-normal">(자녀 ${member.children.length})</span>`;
+            }
+
             tr.innerHTML = `
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-3">

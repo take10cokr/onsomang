@@ -30,7 +30,7 @@
             },
         }
     </script>
-    <title>교인 추가 - 교회 관리 시스템</title>
+    <title>교인 정보 수정 - 온소망145순</title>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
@@ -51,31 +51,17 @@
             </header>
             <main class="flex flex-1 justify-center py-8 px-4 lg:px-40">
                 <div class="layout-content-container flex flex-col max-w-[800px] flex-1 gap-6">
-                    <div class="bg-white dark:bg-slate-900/50 p-1.5 rounded-xl border border-primary/10 shadow-sm flex">
-                        <label class="flex-1 cursor-pointer">
-                            <input checked="" class="peer hidden" name="type" type="radio" value="family" />
-                            <div
-                                class="text-center py-2.5 rounded-lg text-sm font-semibold transition-all peer-checked:bg-primary peer-checked:text-white text-slate-500">
-                                가구/가족 추가</div>
-                        </label>
-                        <label class="flex-1 cursor-pointer">
-                            <input class="peer hidden" name="type" type="radio" value="individual" />
-                            <div
-                                class="text-center py-2.5 rounded-lg text-sm font-semibold transition-all peer-checked:bg-primary peer-checked:text-white text-slate-500">
-                                개인 추가</div>
-                        </label>
-                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div
                             class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-primary/5 shadow-sm space-y-4">
                             <h3 class="text-lg font-bold flex items-center gap-2 mb-4">
-                                <span class="material-symbols-outlined text-primary">badge</span> 기본 정보
+                                <span class="material-symbols-outlined text-primary">man</span> 남편 (기본 정보)
                             </h3>
                             <div class="space-y-1.5">
                                 <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">이름</p>
                                 <input id="memberName"
                                     class="w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-primary focus:border-primary px-4 py-3"
-                                    placeholder="이름을 입력하세요" type="text" />
+                                    placeholder="남편 이름을 입력하세요" type="text" />
                             </div>
                             <div class="space-y-1.5">
                                 <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">역할</p>
@@ -86,8 +72,6 @@
                                     <option value="순원">순원</option>
                                     <option value="방장">방장</option>
                                     <option value="권찰">권찰</option>
-                                    <option value="leader">소그룹 리더</option>
-                                    <option value="member">일반 단원</option>
                                     <option value="new">새가족</option>
                                 </select>
                             </div>
@@ -109,13 +93,13 @@
                         <div
                             class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-primary/5 shadow-sm space-y-4">
                             <h3 class="text-lg font-bold flex items-center gap-2 mb-4">
-                                <span class="material-symbols-outlined text-primary">favorite</span> 배우자 정보
+                                <span class="material-symbols-outlined text-primary">woman</span> 아내 (배우자)
                             </h3>
                             <div class="space-y-1.5">
-                                <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">배우자 이름</p>
+                                <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">이름</p>
                                 <input id="memberSpouse"
                                     class="w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-primary focus:border-primary px-4 py-3"
-                                    placeholder="배우자 성명" type="text" />
+                                    placeholder="아내 이름을 입력하세요" type="text" />
                             </div>
                             <div class="space-y-1.5">
                                 <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">결혼기념일</p>
@@ -130,6 +114,22 @@
                                         있습니다.</p>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Children Info Section -->
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-primary/5 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-bold flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">child_care</span> 자녀 정보
+                            </h3>
+                            <button id="addChildBtn" type="button"
+                                class="flex items-center gap-1 px-3 py-1.5 bg-primary/10 text-primary-dark hover:bg-primary/20 rounded-lg text-sm font-semibold transition-colors">
+                                <span class="material-symbols-outlined text-sm">add</span> 자녀 추가
+                            </button>
+                        </div>
+                        <div id="childrenContainer" class="space-y-4">
+                            <!-- Dynamic child fields will be added here -->
                         </div>
                     </div>
                     <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-primary/5 shadow-sm space-y-4">
@@ -162,7 +162,7 @@
                 </div>
             </main>
             <footer class="py-10 text-center text-slate-400 text-sm">
-                <p>© 2024 Church Management System. All rights reserved.</p>
+                <p>© 2024 온소망145순. All rights reserved.</p>
             </footer>
         </div>
     </div>
