@@ -71,6 +71,9 @@ if (saveBtn) {
                     document.getElementById('memberPhone').value = data.phone || '';
                     document.getElementById('memberBirthdate').value = data.birthdate || '';
                     document.getElementById('memberSpouse').value = data.spouse || '';
+                    document.getElementById('spouseRole').value = data.spouseRole || '';
+                    document.getElementById('spousePhone').value = data.spousePhone || '';
+                    document.getElementById('spouseBirthdate').value = data.spouseBirthdate || '';
                     document.getElementById('memberAnniversary').value = data.anniversary || '';
                     document.getElementById('memberPrayerRequest').value = data.prayerRequest || '';
                     document.getElementById('memberNotes').value = data.notes || '';
@@ -119,6 +122,9 @@ if (saveBtn) {
                     phone: document.getElementById('memberPhone').value,
                     birthdate: document.getElementById('memberBirthdate').value,
                     spouse: document.getElementById('memberSpouse').value,
+                    spouseRole: document.getElementById('spouseRole').value,
+                    spousePhone: document.getElementById('spousePhone').value,
+                    spouseBirthdate: document.getElementById('spouseBirthdate').value,
                     anniversary: document.getElementById('memberAnniversary').value,
                     children: children, // Update children
                     prayerRequest: document.getElementById('memberPrayerRequest').value,

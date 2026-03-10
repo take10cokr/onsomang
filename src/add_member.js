@@ -80,6 +80,9 @@ if (saveBtn) {
                 phone: document.getElementById('memberPhone').value,
                 birthdate: document.getElementById('memberBirthdate').value,
                 spouse: document.getElementById('memberSpouse').value,
+                spouseRole: document.getElementById('spouseRole').value,
+                spousePhone: document.getElementById('spousePhone').value,
+                spouseBirthdate: document.getElementById('spouseBirthdate').value,
                 anniversary: document.getElementById('memberAnniversary').value,
                 children: children, // Add collected children array
                 prayerRequest: document.getElementById('memberPrayerRequest').value,
