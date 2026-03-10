@@ -28,8 +28,12 @@ if (memberTableBody) {
             // Format roles and family display
             const roleStyles = {
                 '순장': 'bg-blue-100 text-blue-700',
+                '순모': 'bg-pink-100 text-pink-700',
+                '부순장': 'bg-indigo-100 text-indigo-700',
+                '부순모': 'bg-rose-100 text-rose-700',
                 '순원': 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400',
                 '방장': 'bg-purple-100 text-purple-700',
+                '방모': 'bg-fuchsia-100 text-fuchsia-700',
                 '권찰': 'bg-emerald-100 text-emerald-700',
                 'leader': 'bg-primary/10 text-primary-dark',
                 'member': 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400',
@@ -38,8 +42,12 @@ if (memberTableBody) {
 
             const roleLabels = {
                 '순장': '순장',
+                '순모': '순모',
+                '부순장': '부순장',
+                '부순모': '부순모',
                 '순원': '순원',
                 '방장': '방장',
+                '방모': '방모',
                 '권찰': '권찰',
                 'leader': '리더',
                 'member': '멤버',
