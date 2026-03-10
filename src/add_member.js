@@ -15,12 +15,19 @@ function createChildFields() {
         <button type="button" class="remove-child absolute -top-2 -right-2 bg-red-100 text-red-600 rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
             <span class="material-symbols-outlined text-xs">close</span>
         </button>
-        <div class="grid grid-cols-2 gap-4">
-            <div class="space-y-1.5">
+        <div class="grid grid-cols-3 gap-4">
+            <div class="space-y-1.5 col-span-1">
                 <p class="text-xs font-semibold text-slate-500">자녀 이름</p>
                 <input class="child-name w-full rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-primary focus:border-primary px-3 py-2 text-sm" placeholder="이름" type="text" />
             </div>
-            <div class="space-y-1.5">
+            <div class="space-y-1.5 col-span-1">
+                <p class="text-xs font-semibold text-slate-500">성별</p>
+                <select class="child-gender w-full rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-primary focus:border-primary px-3 py-2 text-sm">
+                    <option value="male">남</option>
+                    <option value="female">여</option>
+                </select>
+            </div>
+            <div class="space-y-1.5 col-span-1">
                 <p class="text-xs font-semibold text-slate-500">생년월일</p>
                 <input class="child-birth w-full rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-primary focus:border-primary px-3 py-2 text-sm" type="date" />
             </div>
@@ -60,9 +67,10 @@ if (saveBtn) {
             const childEntries = document.querySelectorAll('.child-entry');
             childEntries.forEach(entry => {
                 const name = entry.querySelector('.child-name').value;
+                const gender = entry.querySelector('.child-gender').value;
                 const birthdate = entry.querySelector('.child-birth').value;
                 if (name) {
-                    children.push({ name, birthdate });
+                    children.push({ name, gender, birthdate });
                 }
             });
 

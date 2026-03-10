@@ -55,11 +55,15 @@ if (memberTableBody) {
             let childrenInfo = '';
 
             if (member.children && Array.isArray(member.children) && member.children.length > 0) {
-                const childNames = member.children.map(c => c.name).join(', ');
+                const childBadges = member.children.map(c => {
+                    const genderColor = c.gender === 'female' ? 'text-rose-400' : 'text-blue-400';
+                    return `<span class="${genderColor}">${c.name}</span>`;
+                }).join(', ');
+
                 childrenInfo = `
                     <div class="flex items-center gap-1 text-[11px] text-slate-400 font-normal mt-0.5">
                         <span class="material-symbols-outlined !text-[14px]">child_care</span>
-                        <span>${childNames}</span>
+                        <span>${childBadges}</span>
                     </div>
                 `;
             }
