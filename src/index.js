@@ -8,22 +8,24 @@ setupAuthUI('sidebarAuth');
 
 
 const memberTableBody = document.querySelector('tbody');
+const searchInput = document.getElementById('searchInput');
+
+let allMembers = [];
+let currentSearch = '';
 
 if (memberTableBody) {
-    // Listen for real-time updates to the members collection
-    const membersRef = collection(db, 'members');
-    const q = query(membersRef, orderBy('createdAt', 'desc'));
-
-    onSnapshot(q, (snapshot) => {
+    // Render function
+    const renderMembers = (members) => {
         memberTableBody.innerHTML = ''; // Clear existing rows
 
-        if (snapshot.empty) {
+        if (members.length === 0) {
             memberTableBody.innerHTML = '<tr><td colspan="5" class="px-6 py-4 text-center text-slate-500">등록된 멤버가 없습니다.</td></tr>';
             return;
         }
 
-        snapshot.forEach((docSnap) => {
-            const member = docSnap.data();
+        members.forEach((memberObj) => {
+            const member = memberObj.data;
+            const docId = memberObj.id;
             const tr = document.createElement('tr');
             tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-700/50';
 
@@ -105,10 +107,10 @@ if (memberTableBody) {
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex gap-2">
-                        <a href="edit_member.html?id=${docSnap.id}" class="text-slate-400 hover:text-primary transition-colors" title="수정">
+                        <a href="edit_member.html?id=${docId}" class="text-slate-400 hover:text-primary transition-colors" title="수정">
                             <span class="material-symbols-outlined text-sm">edit</span>
                         </a>
-                        <button data-id="${docSnap.id}" class="delete-btn text-slate-400 hover:text-red-500 transition-colors" title="삭제">
+                        <button data-id="${docId}" class="delete-btn text-slate-400 hover:text-red-500 transition-colors" title="삭제">
                             <span class="material-symbols-outlined text-sm">delete</span>
                         </button>
                     </div>
@@ -132,7 +134,44 @@ if (memberTableBody) {
                 }
             });
         });
+    };
 
+    const applySearch = () => {
+        const filtered = allMembers.filter(memberObj => {
+            if (!currentSearch) return true;
+            const lowerSearch = currentSearch.toLowerCase();
+            const nameMatch = (memberObj.data.name || '').toLowerCase().includes(lowerSearch);
+            const spouseMatch = (memberObj.data.spouse || '').toLowerCase().includes(lowerSearch);
+            return nameMatch || spouseMatch;
+        });
+        renderMembers(filtered);
+    };
+
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value.trim();
+            applySearch();
+        });
+
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                currentSearch = e.target.value.trim();
+                applySearch();
+            }
+        });
+    }
+
+    // Listen for real-time updates to the members collection
+    const membersRef = collection(db, 'members');
+    const q = query(membersRef, orderBy('createdAt', 'desc'));
+
+    onSnapshot(q, (snapshot) => {
+        allMembers = snapshot.docs.map(docSnap => ({
+            id: docSnap.id,
+            data: docSnap.data()
+        }));
+        applySearch();
     }, (error) => {
         console.error("Error fetching members: ", error);
         memberTableBody.innerHTML = '<tr><td colspan="5" class="px-6 py-4 text-center text-red-500">멤버 정보를 불러오는데 실패했습니다.</td></tr>';
