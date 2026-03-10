@@ -1,9 +1,38 @@
 import { db } from './firebase.js';
 import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { requireAuth } from './auth.js';
 
+requireAuth();
 const saveBtn = document.getElementById('saveMemberBtn');
 const addChildBtn = document.getElementById('addChildBtn');
 const childrenContainer = document.getElementById('childrenContainer');
+
+const formatPhoneNumber = (value) => {
+    if (!value) return "";
+    value = value.replace(/[^0-9]/g, "");
+    let result = [];
+    if (value.startsWith("02")) {
+        if (value.length <= 2) return value;
+        if (value.length <= 5) result.push(value.substr(0, 2), value.substr(2));
+        else if (value.length <= 9) result.push(value.substr(0, 2), value.substr(2, 3), value.substr(5));
+        else result.push(value.substr(0, 2), value.substr(2, 4), value.substr(6));
+    } else {
+        if (value.length <= 3) return value;
+        if (value.length <= 6) result.push(value.substr(0, 3), value.substr(3));
+        else if (value.length <= 10) result.push(value.substr(0, 3), value.substr(3, 3), value.substr(6));
+        else result.push(value.substr(0, 3), value.substr(3, 4), value.substr(7));
+    }
+    return result.join("-");
+};
+
+// Add auto-hyphen event listeners to phone inputs
+document.querySelectorAll('#memberPhone, #spousePhone').forEach(input => {
+    if (input) {
+        input.addEventListener('input', (e) => {
+            e.target.value = formatPhoneNumber(e.target.value);
+        });
+    }
+});
 
 // Function to create a child input block
 function createChildFields(name = '', gender = 'male', birthdate = '') {
@@ -68,13 +97,13 @@ if (saveBtn) {
                     const data = docSnap.data();
                     document.getElementById('memberName').value = data.name || '';
                     document.getElementById('memberRole').value = data.role || '';
-                    document.getElementById('memberPhone').value = data.phone || '';
+                    document.getElementById('memberPhone').value = formatPhoneNumber(data.phone || '');
                     document.getElementById('memberBirthdate').value = data.birthdate || '';
                     document.getElementById('memberSpouse').value = data.spouse || '';
                     document.getElementById('spouseRole').value = data.spouseRole || '';
-                    document.getElementById('spousePhone').value = data.spousePhone || '';
+                    document.getElementById('spousePhone').value = formatPhoneNumber(data.spousePhone || '');
                     document.getElementById('spouseBirthdate').value = data.spouseBirthdate || '';
-                    document.getElementById('memberAnniversary').value = data.anniversary || '';
+
                     document.getElementById('memberPrayerRequest').value = data.prayerRequest || '';
                     document.getElementById('memberNotes').value = data.notes || '';
 
@@ -125,7 +154,7 @@ if (saveBtn) {
                     spouseRole: document.getElementById('spouseRole').value,
                     spousePhone: document.getElementById('spousePhone').value,
                     spouseBirthdate: document.getElementById('spouseBirthdate').value,
-                    anniversary: document.getElementById('memberAnniversary').value,
+
                     children: children, // Update children
                     prayerRequest: document.getElementById('memberPrayerRequest').value,
                     notes: document.getElementById('memberNotes').value,

@@ -30,7 +30,7 @@
             },
         }
     </script>
-    <title>교인 추가 - 온소망14순</title>
+    <title>교인 추가 - 교회 관리 시스템</title>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
@@ -44,51 +44,59 @@
                     </div>
                     <h2 class="text-xl font-bold tracking-tight">교인 추가</h2>
                 </div>
-                <a href="index.html"
+                <button
                     class="flex items-center justify-center rounded-full h-10 w-10 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-colors">
                     <span class="material-symbols-outlined">close</span>
-                </a>
+                </button>
             </header>
             <main class="flex flex-1 justify-center py-8 px-4 lg:px-40">
                 <div class="layout-content-container flex flex-col max-w-[800px] flex-1 gap-6">
+                    <div class="bg-white dark:bg-slate-900/50 p-1.5 rounded-xl border border-primary/10 shadow-sm flex">
+                        <label class="flex-1 cursor-pointer">
+                            <input checked="" class="peer hidden" name="type" type="radio" value="family" />
+                            <div
+                                class="text-center py-2.5 rounded-lg text-sm font-semibold transition-all peer-checked:bg-primary peer-checked:text-white text-slate-500">
+                                가구/가족 추가</div>
+                        </label>
+                        <label class="flex-1 cursor-pointer">
+                            <input class="peer hidden" name="type" type="radio" value="individual" />
+                            <div
+                                class="text-center py-2.5 rounded-lg text-sm font-semibold transition-all peer-checked:bg-primary peer-checked:text-white text-slate-500">
+                                개인 추가</div>
+                        </label>
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div
                             class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-primary/5 shadow-sm space-y-4">
                             <h3 class="text-lg font-bold flex items-center gap-2 mb-4">
-                                <span class="material-symbols-outlined text-primary">man</span> 남편
+                                <span class="material-symbols-outlined text-primary">badge</span> 기본 정보
                             </h3>
                             <div class="space-y-1.5">
                                 <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">이름</p>
-                                <input id="memberName"
+                                <input
                                     class="w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-primary focus:border-primary px-4 py-3"
-                                    placeholder="남편 이름을 입력하세요" type="text" />
+                                    placeholder="이름을 입력하세요" type="text" />
                             </div>
                             <div class="space-y-1.5">
                                 <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">역할</p>
-                                <select id="memberRole"
+                                <select
                                     class="w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-primary focus:border-primary px-4 py-3">
-                                    <option value="">선택하세요</option>
-                                    <option value="순장">순장</option>
-                                    <option value="순모">순모</option>
-                                    <option value="부순장">부순장</option>
-                                    <option value="부순모">부순모</option>
-                                    <option value="순원">순원</option>
-                                    <option value="방장">방장</option>
-                                    <option value="방모">방모</option>
-                                    <option value="권찰">권찰</option>
+                                    <option value="">선택하세요 (리더/단원)</option>
+                                    <option value="leader">소그룹 리더</option>
+                                    <option value="member">일반 단원</option>
                                     <option value="new">새가족</option>
                                 </select>
                             </div>
                             <div class="space-y-1.5">
                                 <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">연락처</p>
-                                <input id="memberPhone"
+                                <input
                                     class="w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-primary focus:border-primary px-4 py-3"
                                     placeholder="010-0000-0000" type="tel" />
                             </div>
                             <div class="space-y-1.5">
                                 <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">생년월일</p>
                                 <div class="relative">
-                                    <input id="memberBirthdate"
+                                    <input
                                         class="w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-primary focus:border-primary px-4 py-3"
                                         type="date" />
                                 </div>
@@ -97,59 +105,15 @@
                         <div
                             class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-primary/5 shadow-sm space-y-4">
                             <h3 class="text-lg font-bold flex items-center gap-2 mb-4">
-                                <span class="material-symbols-outlined text-primary">woman</span> 아내 (배우자)
+                                <span class="material-symbols-outlined text-primary">favorite</span> 배우자 정보
                             </h3>
                             <div class="space-y-1.5">
-                                <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">이름</p>
-                                <input id="memberSpouse"
+                                <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">배우자 이름</p>
+                                <input
                                     class="w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-primary focus:border-primary px-4 py-3"
-                                    placeholder="아내 이름을 입력하세요" type="text" />
-                            </div>
-                            <div class="space-y-1.5">
-                                <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">역할</p>
-                                <select id="spouseRole"
-                                    class="w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-primary focus:border-primary px-4 py-3">
-                                    <option value="">선택하세요</option>
-                                    <option value="순장">순장</option>
-                                    <option value="순모">순모</option>
-                                    <option value="부순장">부순장</option>
-                                    <option value="부순모">부순모</option>
-                                    <option value="순원">순원</option>
-                                    <option value="방장">방장</option>
-                                    <option value="방모">방모</option>
-                                    <option value="권찰">권찰</option>
-                                    <option value="new">새가족</option>
-                                </select>
-                            </div>
-                            <div class="space-y-1.5">
-                                <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">연락처</p>
-                                <input id="spousePhone"
-                                    class="w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-primary focus:border-primary px-4 py-3"
-                                    placeholder="010-0000-0000" type="tel" />
-                            </div>
-                            <div class="space-y-1.5">
-                                <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">생년월일</p>
-                                <input id="spouseBirthdate"
-                                    class="w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-primary focus:border-primary px-4 py-3"
-                                    type="date" />
+                                    placeholder="배우자 성명" type="text" />
                             </div>
 
-                        </div>
-                    </div>
-
-                    <!-- Children Info Section -->
-                    <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-primary/5 shadow-sm space-y-4">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-lg font-bold flex items-center gap-2">
-                                <span class="material-symbols-outlined text-primary">child_care</span> 자녀 정보
-                            </h3>
-                            <button id="addChildBtn" type="button"
-                                class="flex items-center gap-1 px-3 py-1.5 bg-primary/10 text-primary-dark hover:bg-primary/20 rounded-lg text-sm font-semibold transition-colors">
-                                <span class="material-symbols-outlined text-sm">add</span> 자녀 추가
-                            </button>
-                        </div>
-                        <div id="childrenContainer" class="space-y-4">
-                            <!-- Dynamic child fields will be added here -->
                         </div>
                     </div>
                     <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-primary/5 shadow-sm space-y-4">
@@ -158,36 +122,34 @@
                         </h3>
                         <div class="space-y-1.5">
                             <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">기도제목</p>
-                            <textarea id="memberPrayerRequest"
+                            <textarea
                                 class="w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-primary focus:border-primary px-4 py-3 resize-none"
                                 placeholder="첫 방문 기도제목이나 특별한 요청사항을 입력하세요" rows="3"></textarea>
                         </div>
                         <div class="space-y-1.5 pt-2">
                             <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">기타 메모</p>
-                            <textarea id="memberNotes"
+                            <textarea
                                 class="w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-primary focus:border-primary px-4 py-3 resize-none"
                                 placeholder="방문 경로, 특이사항 등" rows="2"></textarea>
                         </div>
                     </div>
                     <div class="flex flex-col sm:flex-row gap-3 pt-4">
-                        <button id="saveMemberBtn" type="button"
+                        <button
                             class="flex-1 bg-primary hover:bg-opacity-90 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20">
                             저장하기
                         </button>
-                        <a href="index.html"
-                            class="flex-1 text-center bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold py-4 rounded-xl transition-all">
+                        <button
+                            class="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold py-4 rounded-xl transition-all">
                             취소
-                        </a>
+                        </button>
                     </div>
                 </div>
             </main>
             <footer class="py-10 text-center text-slate-400 text-sm">
-                <p>© 2024 온소망14순. All rights reserved.</p>
+                <p>© 2024 Church Management System. All rights reserved.</p>
             </footer>
         </div>
     </div>
-
-    <script type="module" src="/src/add_member.js"></script>
 </body>
 
 </html>

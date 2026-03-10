@@ -1,7 +1,9 @@
 import { db } from './firebase.js';
 import { collection, query, orderBy, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
 import { setupAuthUI } from './authUI.js';
+import { requireAuth } from './auth.js';
 
+requireAuth();
 setupAuthUI('sidebarAuth');
 
 

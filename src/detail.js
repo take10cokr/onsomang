@@ -1,6 +1,8 @@
 import { db } from './firebase.js';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { requireAuth } from './auth.js';
 
+requireAuth();
 const familyListContainer = document.getElementById('familyListContainer');
 
 if (familyListContainer) {
@@ -114,7 +116,8 @@ if (familyListContainer) {
 
             let spouseHtml = '';
             if (member.spouse) {
-                const anni = member.anniversary ? member.anniversary.replace(/-/g, '. ') : '정보 없음';
+                const sBirth = member.spouseBirthdate ? member.spouseBirthdate.replace(/-/g, '. ') : '정보 없음';
+                const sPhone = member.spousePhone || '정보 없음';
                 spouseHtml = `
                 <details class="group">
                     <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700 list-none border-t border-primary/5">
@@ -135,7 +138,8 @@ if (familyListContainer) {
                                 <span class="material-symbols-outlined text-base">info</span> 상세 정보
                             </h4>
                             <div class="text-sm space-y-2">
-                                <div class="flex justify-between"><span class="text-slate-500">결혼기념일</span><span>${anni}</span></div>
+                                <div class="flex justify-between"><span class="text-slate-500">생년월일</span><span>${sBirth}</span></div>
+                                <div class="flex justify-between"><span class="text-slate-500">연락처</span><span>${sPhone}</span></div>
                             </div>
                         </div>
                     </div>

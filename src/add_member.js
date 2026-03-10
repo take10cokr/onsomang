@@ -1,9 +1,38 @@
 import { db } from './firebase.js';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { requireAuth } from './auth.js';
 
+requireAuth();
 const saveBtn = document.getElementById('saveMemberBtn');
 const addChildBtn = document.getElementById('addChildBtn');
 const childrenContainer = document.getElementById('childrenContainer');
+
+const formatPhoneNumber = (value) => {
+    if (!value) return "";
+    value = value.replace(/[^0-9]/g, "");
+    let result = [];
+    if (value.startsWith("02")) {
+        if (value.length <= 2) return value;
+        if (value.length <= 5) result.push(value.substr(0, 2), value.substr(2));
+        else if (value.length <= 9) result.push(value.substr(0, 2), value.substr(2, 3), value.substr(5));
+        else result.push(value.substr(0, 2), value.substr(2, 4), value.substr(6));
+    } else {
+        if (value.length <= 3) return value;
+        if (value.length <= 6) result.push(value.substr(0, 3), value.substr(3));
+        else if (value.length <= 10) result.push(value.substr(0, 3), value.substr(3, 3), value.substr(6));
+        else result.push(value.substr(0, 3), value.substr(3, 4), value.substr(7));
+    }
+    return result.join("-");
+};
+
+// Add auto-hyphen event listeners to phone inputs
+document.querySelectorAll('#memberPhone, #spousePhone').forEach(input => {
+    if (input) {
+        input.addEventListener('input', (e) => {
+            e.target.value = formatPhoneNumber(e.target.value);
+        });
+    }
+});
 
 // Function to create a child input block
 function createChildFields() {
@@ -83,7 +112,7 @@ if (saveBtn) {
                 spouseRole: document.getElementById('spouseRole').value,
                 spousePhone: document.getElementById('spousePhone').value,
                 spouseBirthdate: document.getElementById('spouseBirthdate').value,
-                anniversary: document.getElementById('memberAnniversary').value,
+
                 children: children, // Add collected children array
                 prayerRequest: document.getElementById('memberPrayerRequest').value,
                 notes: document.getElementById('memberNotes').value,
